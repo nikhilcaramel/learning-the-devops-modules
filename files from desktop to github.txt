@@ -11,6 +11,6 @@ send files from desktop to github
 9. git add .(to add all unadded files)
 10. git commit -m "added files"
 11. git status
-12. git push origin master
+12. git push -u origin master
 13. git status
 14. open github -> ur repo u will see files
