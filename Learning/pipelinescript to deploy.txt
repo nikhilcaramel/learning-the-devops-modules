@@ -1,0 +1,63 @@
+Reference video series :https://www.youtube.com/watch?v=tuIZok81iLk&list=PLH1ul2iNXl7txKuhhDMKenYOThDww6x8S&index=11
+
+   
+Pipeline Script To Deploy :
+
+pipeline {
+    agent any 
+    tools {
+        maven 'maven3'
+    }
+    stages{
+        stage('clone repo') {
+            steps {
+                sh "rm -rf caramelIT"
+            
+                sh "git clone https://github.com/HariReddy910/caramelIT.git";
+            }
+                
+            
+        }
+        stage('mvn build') {
+            steps {
+                 sh "${MAVEN_HOME}/bin/mvn install package"
+                 }
+        }
+	stage('tomcat war') {
+            steps {
+                sshagent(['d7805795-9588-4576-a0c0-c1c911135b9f']) {
+    sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@13.233.137.168:/home/ubuntu/apache-tomcat-9.0.38/webapps"
+
+            }
+        }
+     
+     }
+	 stage('sonarqube analysis') {
+            steps {
+                withSonarQubeEnv('sonar4') {
+                    sh "${MAVEN_HOME}/bin/mvn sonar:sonar"
+                }
+            }
+        }
+	 stage('jfrog') {
+             steps {
+                 script {
+                     
+                 def server = Artifactory.server 'artifactory3'
+                 def uploadSpec = """{ 
+                   "files": [{
+                       "pattern": "**/*.war",
+                       "target": "pipelinejfrog"
+    
+                       
+                    }]
+                 }"""
+                  server.upload(uploadSpec) 
+
+                 }
+             }
+         }
+     
+       
+    } 
+}

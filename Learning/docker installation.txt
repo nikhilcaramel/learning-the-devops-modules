@@ -1,0 +1,5 @@
+get.docker.com(for ubuntu)
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+
+reference video : https://www.youtube.com/watch?v=W7BvS942UZA&feature=youtu.be

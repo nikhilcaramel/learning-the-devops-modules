@@ -1,0 +1,23 @@
+Piepeline script for parameterized build :
+
+Prerequisites:
+create branches in git hub(ex branch1 , branch2)
+steps :
+
+1.select new pipeline project
+2.click on pipeline syntax on leftside
+3.snippet generator -> properties : set job properties
+4.check this project is parameterized -> add parameter
+5.name : branch
+6.choices : branch1 , branch2
+7.generate pipeline script -> copy code and paste in pipeline script of project
+
+
+properties([parameters([choice(choices: ['master\nbranch1\nbranch2\n'], description: 'select branch', name: 'branch')])])
+
+node {
+    stage('scm checkout') {
+        echo "pulling changes from ${params.branch}"
+        git url:"https://github.com/nikhilcaramel/harireddy.git", branch:"${params.branch}"
+    }
+}

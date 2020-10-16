@@ -1,0 +1,61 @@
+1.docker pull imagename(ex. jenkins , tomcat)--> to download docker image
+2. docker images
+docker image ls --> to see list of docker images
+3.docker rmi imagename --> to remove/delete an image from docker host
+4. docker build -t imagename .
+-t for tagname
+. represents current working directory
+5. docker login --> to login to docker hub
+6. docker push --> to push a image into docker hub
+7. docker tag container name or containerid --> to create an image from container
+8. docker search image name --> to search an image in docker hub
+
+containers:
+
+1. docker container ls --> to see list of running docker containers
+2. docker ps -a --> to see list of both running and stopped containers
+3. docker stop containername or containerid --> to stop container
+4. docker start containername or containerid --> to start container
+5. docker restart containername or containerid --> to restart container
+6. docker restart -t 10 containername or containerid --> to restart after 10 seconds
+7. docker rm containername or containerid --> to remove container which is stopped)
+8. docker rm -f containername or containerid --> to remove container which is running)
+9. docker stop $(docker ps -aq) --> to stop all running containers
+10. docker rm $(docker ps -aq) --> to delete all stopped containers
+11. docker rm -f $(docker ps -aq) --> to delete all running containers
+
+to create a new container :
+docker inspect containername or container id ( to see entire information of container)
+docker run [options] imagename
+--name (to assign name to container)
+-d (runs container as a daemon) (i,e. it will run in background in detache module)
+-it (to open an interactive terminal in the container where we can execute linux commands)
+--network (starts container on a specific network)
+-v (to attach an external volume to the container)
+--volume-from (used for creating reusable volumes that can be shared between multiple containers)
+-p (used for port mapping)
+-P (this will automatically map the port of container , portnumber will be greaterthan 10000)
+-e (used for passing environmental variable to containers)
+-rm (this will delete container on exit from the container)
+
+docker attach containername(or)id --> to go into the shell of an already running container which has a shell opened)
+docker exec -it containername/containerid --> to go into a container and open a new shell
+
+network commands :
+
+1. docker network ls (to see list of all available networks)
+2. docker network create networkname ( to create new network)
+3. docker network inspect networkname ( to know complete information of that particular network)
+4. docker network connect networkname/containername/container id (to attach a network to running container) 
+5. docker network rm networkname/network id (to delete a network)
+6. docker network disconnect networkname/containername/container id (to
+
+types of network :
+
+1. bridge network
+2. null or none
+3. host only
+4. overlay
+ 
+
+

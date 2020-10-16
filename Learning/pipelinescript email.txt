@@ -1,0 +1,37 @@
+Email notification :
+
+steps :
+
+1.manage jenkins->configure system->email notification
+2.smtp server :smtp.gmail.com
+3.advanced
+4.use smtp authentication
+5.username:
+6.password:
+7.use ssl
+8.smtp port:465
+9.apply and save
+10.open project
+11.pipeline syntax
+12.sample step:email extended email
+13.to:mail id
+14:subject:jenkins build
+15.generate pipeline script
+16.copy it
+17.paste in pipeline script
+18.build
+
+
+properties([parameters([choice(choices: ['master\nbranch1\nbranch2\n'], description: 'select branch', name: 'branch')])])
+
+node {
+    stage('scm checkout') {
+        echo "pulling changes from ${params.branch}"
+        git url:"https://github.com/nikhilcaramel/harireddy.git", branch:"${params.branch}"
+    }
+    stage('email notification') {
+        
+            emailext body: '', subject: 'jenkins build', to: 'komuravellynikhil29@gmail.com'
+        
+    }
+}

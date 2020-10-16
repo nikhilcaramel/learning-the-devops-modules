@@ -1,0 +1,23 @@
+   - name: install apache
+     apt:
+      name: apache2*
+      state: latest
+   - name: start apache
+     service:
+      name: apache2
+      state: started
+   - name: firewall
+     firewalld:
+      service: http
+      zone: public
+      permanent: yes
+      immediate: yes
+      state: enabled
+   - name: restart
+     service:
+      name: httpd
+      state: restarted
+   - name: copyfile
+     copy:
+      content: "hi nikhil"
+      dest: /var/www/html/index4.html

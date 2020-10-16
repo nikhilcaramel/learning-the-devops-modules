@@ -1,0 +1,21 @@
+Nginx and tomcat docker container
+
+nginx:
+
+docker pull nginx:latest
+docker run -d --name nginxnew -p 8090:80 nginx:latest
+give 8090 port in ec2 securitygroups
+now hit ip:8090 in browser
+
+
+tomcat:
+refer link : https://forums.docker.com/t/tomcat-give-error-404/95130/2
+
+docker pull tomcat:latest
+docker run -d --name mytomcatnew(give any unique name) -p 8086:8080 tomcat:latest
+docker exec -it mytomcatnew /bin/bash
+mv webapps webapps2
+mv webapps.dist/ webapps
+exit
+give 8086 port in ec2 securitygroups
+now hit ip:8086 in browser

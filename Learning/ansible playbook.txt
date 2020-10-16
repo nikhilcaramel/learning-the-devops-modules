@@ -1,0 +1,2 @@
+for ansible playbook please refer
+https://www.youtube.com/watch?v=XQlgP9OcjWg&list=PLH1ul2iNXl7vFneIMJ8pwEOw9t35SzOnX&index=3
