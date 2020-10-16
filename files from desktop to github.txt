@@ -1,0 +1,16 @@
+send files from desktop to github
+
+1. got to folder which u want to send
+2. open it
+3. right click and git bash here
+4. git init
+5. open github.com -> new repo
+6. copy the repo address(https://github.com/nikhilcaramel/just-test.git)
+7. git repo add origin https://github.com/nikhilcaramel/just-test.git
+8. git status
+9. git add .(to add all unadded files)
+10. git commit -m "added files"
+11. git status
+12. git push origin master
+13. git status
+14. open github -> ur repo u will see files
