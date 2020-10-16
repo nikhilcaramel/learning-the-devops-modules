@@ -1,0 +1,17 @@
+shell *
+copy *
+fetch *
+file *
+uri *
+tag *
+package
+command *
+handler *
+debug *
+line in file *
+git *
+cli_config %not valid for this ssh agent is msg%
+archive *
+error handling *
+stat *
+loops *

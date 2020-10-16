@@ -1,0 +1,17 @@
+Installation of virtual box , vagrant
+
+
+steps:
+virtualbox
+1. Type virtual box in browser
+2. click on virtualbox.org
+3. click on download
+4. press next and finish
+
+vagrant:
+1. Type vagrant on browser
+2. select vagrantup.com
+3. click on download for windows64
+4. click next and accept license
+5. retsart
+

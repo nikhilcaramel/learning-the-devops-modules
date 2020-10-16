@@ -1,0 +1,40 @@
+Parameterized Jobs :
+
+1.Start jenkins
+2.Manage jenkins->manage plugins->parameterized trigger
+3.Create new freestyle job(develop1)->this project is parameterized->string
+4.Create another freestyle job(develop2)->post buils actions->parameterized->project name: develop1->when buils is stable
+5.Now run develop2 and even develop1 will also run
+
+I describe how to set up Jenkins and GitHub so that a build is triggered when a change is pushed to a specific branch
+
+Build Automatically Using Webhook When Changes Made In Git:
+
+On the GitHub web site:
+a.Go to your repository’s page on GitHub.
+b.Select Settings, Webhooks, Add webhook
+c.In the Payload URL enter:
+https://jenkins.princeton.edu/github-webhook/
+d.In Content type select: application/json.
+e.In the box Which events would you like to trigger this webhook? select Just the push event.
+f.Click on Add webhook.
+g.Once your webhook has been created, you will get a message on the top of
+your browser window that reads:
+Okay, that hook was successfully created. We sent a ping payload to
+test it out! Read more about it at
+https://developper.github.com/webhooks/#ping-event.
+h.As you see GitHub sent a ping to the jenkins server. You can check that
+i.it was successful by clicking on the webhook we just created,
+j.Scroll down to the Recent Deliveries and look at the response, you should
+have a 200 return code that is green, otherwise something went wrong.
+
+When Changes Made To Specific Branch In Github :
+
+First u need to have branches in git otherthan master(ex : branch1 , branch2 , branch3 , branch4 , branch5)
+
+On your Jenkins job page:
+i.Go to Configure.
+ii.Select the Source Code Management tab.
+iii.In the Branch to Build section, Branch Specifier (blank for 'any'), then enter the branch you want to follow, here I am following the branch1.
+iv.In the Build Triggers tab, select GitHub hook trigger for GITScm polling.
+v.Click Save.

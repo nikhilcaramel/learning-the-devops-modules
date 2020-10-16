@@ -1,0 +1,10 @@
+Ssh keygen usage target : https://vexpose.blog/2019/11/26/ansible-master-enabling-ssh-key-based-authentication/#:~:text=In%20my%20case%20it's%20Ansible,id_rsa%2C%20which%20you%20can%20change.
+
+
+
+
+
+
+
+permission denied(public key)
+https://www.digitalocean.com/community/questions/error-permission-denied-publickey-when-i-try-to-ssh

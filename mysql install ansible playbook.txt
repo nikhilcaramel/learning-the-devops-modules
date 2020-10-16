@@ -1,0 +1,39 @@
+Please refer the video : https://www.youtube.com/watch?v=VXulm-MTGb0
+
+Ansible playbook for installing mysql :
+
+ubuntu@ip-172-31-43-250:~$ vi mysql.yml
+---
+- name: installing
+  hosts: all
+  become: yes
+  tasks:
+   - name: sql install
+     apt:
+      name: mysql-server
+      state: present
+   - name: start sql
+     service:
+      name: mysql
+      state: restarted
+   - name: create demo database for sql
+     mysql_db:
+      name: demo
+      name: niks
+      state: present
+   - name: create user
+     mysql_user:
+      name: nikhil
+      password: nikhil
+      priv: nikhil.*:ALL
+      host: '%'
+      state: present
+...
+
+
+open slave server i,e. ip given in hosts(/etc/ansible/hosts)
+sudo mysql
+show databases;
+u will see demo and nikhil databases created 
+SELECT user FROM mysql.user;
+u will see nikhil user created

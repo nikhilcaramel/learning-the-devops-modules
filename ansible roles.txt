@@ -1,0 +1,81 @@
+cd /etc/ansible
+sudo ansible-galaxy init apache2 --offline
+cd apache2
+ls
+cd tasks
+ls
+main.yml
+sudo vi install.yml
+---
+- name: install apache2
+  apt:
+   name: apache2
+   state: present
+   update_cache: yes
+...
+esc : wq!
+sudo vi sendindex.yml
+---
+- name: sending index
+  copy:
+   src: index.html
+   dest: /var/www/html/index.html
+  notify:
+   restart-apache2
+esc: wq!
+sudo vi checkinguri.yml
+---
+- name: check uri
+  uri:
+   url: http://targetip
+   status: 200
+esc :wq!
+sudo vi main.yml
+- include: install.yml
+- include: sendindex.yml
+- include: checkinguri.yml
+esc :wq!
+cd ..
+u will be in apache2
+cd files
+ls
+sudo vi index.html
+<html>
+<h1> hi nikhil </h1>
+</html>
+esc :wq!
+cd ..
+cd handlers
+sudo vi main.yml
+---
+- name: restart-apache2
+  service:
+   name: apache2
+   state: restarted
+esc :wq!
+cd ..
+u will be in apache2
+cd ..
+u will be in ansible
+sudo vi nikhil.yml
+---
+- hosts: all
+  become: yes
+  roles:
+   - apache2
+esc :wq!
+ansible-playbook nikhil.yml(if u get error use -b i,e. ansible-playbook nikhil.yml -b)
+
+
+
+   
+
+
+
+
+
+
+
+   
+
+

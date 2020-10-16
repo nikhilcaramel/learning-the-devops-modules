@@ -1,0 +1,66 @@
+Install Tomcat On Ubuntu :
+
+(for easy way please refer this than below steps : https://www.ionos.com/community/server-cloud-infrastructure/apache/install-and-use-apache-tomcat-on-centos-7/
+
+1.Open ec2 putty
+2.sudo apt update (if java not installed yum install java-1.8.0-openjdk-devel )
+3.sudo apt install wget
+
+https://tomcat.apache.org/download-90.cgi open (binary distributions -> core -> tar.gz) right click copy link
+
+4.sudp wget paste copied link
+5.ls -l (u will receive file)
+6.tar -zvxf filename from step5
+7.ls -l
+8.cd apache-tomcat-9.0.37/bin
+9.ls -l
+10.sudo chmod +x startup.sh
+11.sudo chmod +x shutdown.sh
+12.ls -l
+13../startup.sh
+14../shutdown.sh
+15.
+16.cd ..
+17.ls -l
+18.cd webapps
+19.ls -l
+20.cd hostmanager
+21.ls -l
+22.cd META-INF
+23.ls -l
+24.sudo nano context.xml
+25.(comedown till u see valve and apply <!--  -->) i,e. <!-- <valve ....
+										/> -->
+26.ctrl x and y
+27.cd ..
+28.cd ..
+29.ls -l (u will see manager)
+30.cd manager
+31.cd META-INF
+32.ls -l (u will find context.xml)
+33.nano context.xml
+34.do same as step 25 and 26
+35.cd ..
+36.cd ..
+37.cd ..(u will be in apache-tomcat folder)
+38.cd conf
+39.ls -l (u will see tomcat.users.xml)
+40.sudo nano tomcat.users.xml
+41.godown till tomcat users
+42.(just before line </tomcat-users>) paste <role rolename="manager-gui"/>
+					    <role rolename="manager-script"/>
+				       	    <user username="admin" password="admin" roles="manager-gui,manager-script"/>
+43.ctrl x and enter
+44.cd .. (u will b in tomcat folder)
+45.bin/startup.sh
+
+
+if u want to change tomcat to 8088(another port)
+cd apache-tomcat-9.0.37 -> conf
+vi server.xml
+<connector port=8088
+esc :wq!
+sudo firewall-cmd --permanent --zone=public --add-port=8088/tcp
+sudo firewall-cmd --reload
+bin/shutdown.sh
+bin/startup.sh

@@ -1,0 +1,82 @@
+
+Sonarqube Installation , Find Quality Gate Using Sonar Scanner In Jenkins
+
+Steps:
+1.Install java 11 in ec2(ubuntu) t2medium.
+2.Install mysql
+	> sudo apt update
+	> sudo apt install mysql-server
+	> sudo mysql_secure_installation
+	> give yes for all questions
+	> sudo mysql
+	> CREATE USER 'nikhil'@'localhost' IDENTIFIED BY 'password';
+	> GRANT ALL PRIVILEGES ON *.* TO 'nikhil'@'localhost' WITH GRANT OPTION;
+	> exit
+	> systemctl status mysql.service
+3.Install sonarqube
+	> sudo apt update
+	> sudo apt install wget
+	> sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-7.9.4.zip(google sonarcube downloads)
+	> ls -l
+	> sudo unzip sonarqube-7.9.4.zip
+	> ls -l
+	> mv sonarqube-7.9.4 sonarqube
+	> sudo useradd sonaradmin  
+	> sudo passwd sonaradmin
+        > sudo chmod 775 -R sonarqube
+        >  sudo chown -R sonaradmin:sonaradmin sonarqube
+	> cd sonarqube
+	> ls -l
+	> cd conf
+	> ls -l
+	> sudo nano sonar.properties
+	> uncomment sonar.jdbc.username : nikhil
+	> uncomment sonar.jdbc.password : password
+	> webserver->uncomment sonar.web.host=0.0.0.0
+	> webserver->uncomment sonar.web.port=9000
+	> ctrl x and y 
+	> cd ..
+	> cd bin
+	> ls -l
+	> cd linux-x86-64
+	> ls -l
+	> su sonaradmin
+	> enter password
+	> ./sonar.sh start
+	> ./sonar.sh status
+	> check ipaddress:9000
+	> default username : admin and default password : admin
+4. Install jenkins and sonar-scanner in another ec2 (ubuntu)\
+	> sudo apt update
+	> sudo install wget
+	> sudo install unzip
+	> install jenkins
+	> sudo apt update
+	> cd opt/
+	> sudo wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.2.0.1227-linux.zip
+	> unzip sonar-scanner-cli-3.2.0.1227-linux.zip
+	> cd sonar-scanner-cli-3.2.0.1227-linux
+	> ls -l
+	> cd conf
+	> ls -l
+	> sudo nano sonar-scanner.properties
+	> sonar.host.url=http://<SONAR_SERVER_IP>:9000
+	> open jenkins
+	> Manage Jenkins > Manage Plugins > Avalable > SonarQube scanner
+	> Manage Jenkins > Global Tool Configuration > SonarQube Scanner
+	> Name : sonar_scanner
+	> SONAR_RUNNER_HOME : /opt/sonar_scanner
+	> Manage Jenkins > Configure Systems > SonarQube Servers
+	> Name : SonarQube
+	> ServerURL : http://<Sonarqube_server>:9000/sonar
+	> Server authentication token To Get Authentication code follow below steps. Login to SonarQube server as a admin My Account > Security > Generate Token
+	> create freestyle job
+	> source code -> git -> give any gitrepo
+	> build->Execute SonarQube Scanner > Analysis properties (it is mandatary).
+	> sonar.projectKey=Valaxy
+	> sonar.projectName=ValaxyDemo
+	> sonar.projectVersion=1.0
+	> apply and save
+	> build now
+	> goto console output and check analysis link
+

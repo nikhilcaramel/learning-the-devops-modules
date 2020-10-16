@@ -1,0 +1,102 @@
+Linux Commands :
+
+1.pwd
+Use the pwd command to find out the path of the current working directory (folder) you’re in.
+syntax : pwd
+2.cd
+To navigate through the Linux files and directories, use the cd command.
+syntax : cd bin
+	cd .. (with two dots) to move one directory up
+	cd to go straight to the home folder
+	cd- (with a hyphen) to move to your previous directory
+3.ls
+This command lists all the contents in the current working directory.
+syntax : ls
+	ls -R will list all the files in the sub-directories as well
+	ls -a will show the hidden files
+	ls -al will list the files and directories with detailed information like the permissions, size, owner, etc.
+4.cat
+This command can read, modify or concatenate text files. It also displays file contents.
+syntax : cat file.txt
+	cat > filename creates a new file
+5.cp
+Use the cp command to copy files from the current directory to a different directory
+syntax : cp pic.jpg /home/username/Pictures
+6.mv
+The primary use of the mv command is to move files, although it can also be used to rename files
+syntax : mv file1 file
+7.mkdir
+Use mkdir command to make a new directory
+syntax : mkdir jfrog
+8.rmdir
+If you need to delete a directory, use the rmdir command
+syntax : rmdir jfrog
+9.rm
+The rm command is used to delete directories and the contents within them
+syntax : rm jfrog
+10.touch
+The touch command allows you to create a blank new file through the Linux command line
+syntax : touch /home/username/Documents/Web.html (to create an HTML file entitled Web under the Documents directory)
+11.grep
+It lets you search through all the text in a given file
+syntax : grep linux linux.txt
+12.sudo
+Short for “SuperUser Do”, this command enables you to perform tasks that require administrative or root permissions
+syntax : sudo useradd nikhil
+13.head
+The head command is used to view the first lines of any text file
+syntax : head -n linux.txt
+14.tail
+This one has a similar function to the head command, but instead of showing the first lines
+syntax : tail -n linux.txt
+15.diff
+The diff command compares the contents of two files line by line
+syntax : diff file1.txt file2.txt
+16.tar
+The tar command is the most used command to archive multiple files into a tarball — a common Linux file format that is similar to zip format, with compression being optional.
+syntax : tar -xvf myarchive.tar
+17.chmod
+chmod is another Linux command, used to change the read, write, and execute permissions of files and directories
+syntax : chmod options permissions file name
+chmod u=rwx,g=rx,o=r myfile
+	the user can read, write, and execute it;
+	members of your group can read and execute it; and
+	others may only read it
+chmod 754 myfile
+	4 stands for "read",
+	2 stands for "write",
+	1 stands for "execute", and
+	0 stands for "no permission
+18.chown
+In Linux, all files are owned by a specific user. The chown command enables you to change or transfer the ownership of a file to the specified username
+For instance, chown linuxuser2 file.ext will make linuxuser2 as the owner of the file.ext
+19.jobs
+jobs command will display all current jobs along with their statuses. A job is basically a process that is started by the shell
+20.kill
+If you have an unresponsive program, you can terminate it manually by using the kill command
+21.ping
+Use the ping command to check your connectivity status to a server. For example, by simply entering ping google.com, the command will check whether you’re able to connect to Google and also measure the response time
+22.wget
+You can even download files from the internet with the help of the wget command
+syntax : wget followed by the download link
+23.uname
+The uname command, short for Unix Name, will print detailed information about your Linux system like the machine name, operating system, kernel, and so on
+24.top
+As a terminal equivalent to Task Manager in Windows, the top command will display a list of running processes and how much CPU each process uses
+25.history
+When you’ve been using Linux for a certain period of time, you’ll quickly notice that you can run hundreds of commands every day. As such, running history command is particularly useful if you want to review the commands you’ve entered before
+26.man
+Confused about the function of certain Linux commands? Don’t worry, you can easily learn how to use them right from Linux’s shell by using the man command. For instance, entering man tail will show the manual instruction of the tail command
+27.echo
+This command is used to move some data into a file. For example, if you want to add the text, “Hello, my name is John” into a file called name.txt, you would type echo Hello, my name is John >> name.txt
+28.zip
+Use the zip command to compress your files into a zip archive
+29.unzip
+Use the unzip command to extract the zipped files from a zip archive
+30.hostname
+If you want to know the name of your host/network simply type hostname. Adding a -I to the end will display the IP address of your network
+31.useradd
+Useradd is used to create a new user, while passwd is adding a password to that user’s account. To add a new person named John type, useradd John and then to add his password type, passwd 123456789
+32.userdel
+To remove a user is very similar to adding a new user. To delete the users account type, userdel UserName
+  

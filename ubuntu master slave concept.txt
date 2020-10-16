@@ -1,0 +1,43 @@
+Master Slave Concept :
+
+Pre requisites :
+a. create one slave in ec2
+b. install java 8 or above
+c. mkdir slave1jenkins
+d. cd slave1jenkins
+e. pwd
+f. copy the path
+
+1. Start ec2 putty (ubuntu)
+2. install jenkins
+3. goto managejenkins->manage nodes
+4. give name(node 1)
+5. give description (any)
+6. no of executors (2)
+  7. remote root directory : paste the copied path in prerequisites (f)
+8. labels : node(any)
+9. launch method : launch agent agents via SSH
+10. host : slave ip from ec2 (prerequisites a)
+11. credentials : add
+12. kind : SSH username with private key
+12. ID : any
+13. Desc : any
+14. username : ubuntu(for ubuntu , ec2-user for linux etc)
+15. private key : (open pem file with notepad copy all and paste)
+16. add
+17. host key verification strategy : manually trusted
+18. save
+19. click on node1
+20. relaunch agent
+22. create freestyle project
+23. general->restrict where this project can be run
+24. node
+25. source code management -> git
+26. repository url : give git repo (https://github.com/HariReddy910/caramelIT.git)
+27. apply and save
+28. build now
+29. open slave putty
+30. cd slave1jenkins
+31. ls -ltr(u will find workspace)
+32. cd workspace
+33. ls -l (u will see all files in this)

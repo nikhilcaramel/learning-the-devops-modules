@@ -1,0 +1,1 @@
+oracle db : https://oracledbwr.com/oracle-automation-oracle-database-creation-using-ansible-tool/

@@ -1,0 +1,27 @@
+Jenkins Email Notification For Every Build
+
+1. Start jenkins using ec2(ubuntu)
+2. Manage jenkins-> configure system->email notification
+	> smtp server : smtp.gmail.com
+	> advanced
+	> check use smtp authentication
+	> username : mail id from which u want to send mails
+	> password : password of mail id
+	> check use ssl
+	> smtp port : 465
+	> check test configuration by sending test email
+	> give mail id in which u want to receive
+	> test configuration
+	> if u get error for test configuration , open both (sender and receiver ) gmails , click on profile->manage google accounts->security->on less secure app access
+	> apply and save
+3. Create new freestyle project
+4. Source code management -> git -> give git repo
+5. Build -> execute shell -> type something(xyz so that build has to fail , because u will receive email only once build is failed)
+6. Post build actions -> email notification -> give mail id for which u want to receive mails -> send email for every unstable build
+7. Apply and save
+8. Build
+9. Build will fail and u will receive mail
+10. Now remove xyz from build -> command (step 5)
+11. Apply and save
+12. Build
+13. Build is success and u will receive mail

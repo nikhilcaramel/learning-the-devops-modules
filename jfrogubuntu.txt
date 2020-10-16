@@ -1,0 +1,16 @@
+sudo apt update
+java -version
+if java not installed (sudo apt-get install openjdk-8-jdk openjdk-8-doc)
+sudo wget -qO - https://api.bintray.com/orgs/jfrog/keys/gpg/public.key | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://jfrog.bintray.com/artifactory-debs $(lsb_release -cs) main"
+sudo apt update
+sudo apt install jfrog-artifactory-oss
+sudo systemctl start artifactory.service
+http://localhost:8081/artifactory/
+username :admin password :password
+
+open jenkins project
+build environment->maven3-artifactory integration
+artifactory server :jfrog url
+target releases repository : pipelinefrog(artifact that exists in jfrog)
+target snapshots local : pipelinefrog(artifact that exists in jfrog)

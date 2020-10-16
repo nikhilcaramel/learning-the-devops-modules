@@ -1,0 +1,45 @@
+Docker compose
+
+refer video : (raghav pal docker videos)https://www.youtube.com/watch?v=HUpIoF_conA&list=PLhW3qG5bs-L99pQsZ74f-LC-tOEsBp2rK&index=13
+
+1. check docker-compose is installed or not using docker-compose -v
+2. if not sudo-apt install docker-compose(for ubuntu)
+3. now check docker-compose -v
+4. sudo vi docker-compose.yml
+version: '3'
+services:
+
+  web:
+    image: nginx
+    ports:
+    - 4080:80
+
+  database:
+     image: mysql
+  -----------------------------------
+  server:
+     image: tomcat
+     container_name: mndy
+     ports:
+     - 8086:8080
+esc : wq!
+   docker exec -it mndy /bin/bash
+   mv webapps webapps2
+   mv webapps.dist/ webapps
+   exit
+---------------------------------------
+5. docker-compose config(to validate)
+6. docker-compose up -d(when u have more than one yml file use docker-compose -f docker-compose.yml(i,e.file name) up -d
+7. docker ps -a
+8. enable port 4080 in ec2 security-group
+9. then hit ip:4080 in browser
+10. docker-compose down(to stop)
+11. docker-compose up -d --scale database=4(to create 4 databases)
+12. docker ps -a(then u will see 4 databases created)
+13. docker-compose down
+14. docker-compose ps(as it is down u will see ntng)
+
+
+when u have different yml files (more than one yml files) then use
+docker-compose -f filename(docker-compose.yml) up -d
+

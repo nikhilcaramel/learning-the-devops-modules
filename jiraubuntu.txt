@@ -1,0 +1,127 @@
+Install jira on ubuntu :
+
+sudo apt update
+
+sudo apt dist-upgrade
+
+Install MariaDB Database Server :
+
+sudo apt install mariadb-server mariadb-client
+
+sudo systemctl stop mariadb.service
+sudo systemctl start mariadb.service
+sudo systemctl enable mariadb.service
+
+sudo mysql_secure_installation
+
+Enter current password for root (enter for none): Just press the Enter
+Set root password? [Y/n]: Y
+New password: Enter password
+Re-enter new password: Repeat password
+Remove anonymous users? [Y/n]: Y
+Disallow root login remotely? [Y/n]: Y
+Remove test database and access to it? [Y/n]:  Y
+Reload privilege tables now? [Y/n]:  Y
+
+sudo systemctl status mariadb.service
+
+Create Jira Database :
+
+sudo mysql -u root -p
+
+CREATE DATABASE jira CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+
+CREATE USER 'jirauser'@'localhost' IDENTIFIED BY 'new_password_here';
+
+GRANT ALL ON jira.* TO 'jirauser'@'localhost' WITH GRANT OPTION;
+
+FLUSH PRIVILEGES;
+EXIT;
+
+sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+
+The copy and paste the highlighted lines under [mysqld]
+
+# this is only for the mysqld standalone daemon
+[mysqld]
+
+#
+# * Basic Settings
+#
+user            = mysql
+pid-file        = /var/run/mysqld/mysqld.pid
+socket          = /var/run/mysqld/mysqld.sock
+port            = 3306
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+lc-messages-dir = /usr/share/mysql
+skip-external-locking
+
+default-storage-engine= INNODB
+character_set_server = utf8mb4
+innodb_default_row_format = DYNAMIC
+innodb_large_prefix = ON
+innodb_file_format = Barracuda
+innodb_log_file_size = 2G
+sql_mode = NO_AUTO_VALUE_ON_ZERO
+
+Save the file and exit.
+
+sudo systemctl restart mariadb.service
+
+wget https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-8.7.1-x64.bin
+chmod a+x atlassian-jira-software-8.7.1-x64.bin
+
+sudo ./atlassian-jira-software-8.7.1-x64.bin
+
+Unpacking JRE ...
+Starting Installer ...
+This will install Jira Software 8.7.1 on your computer.
+OK [o, Enter], Cancel [c]
+o
+Click Next to continue, or Cancel to exit Setup.
+Choose the appropriate installation or upgrade option.
+Please choose one of the following:
+Express Install (use default settings) [1], Custom Install (recommended for advanced users) [2, Enter], Upgrade an existing Jira installation [3]
+2
+Select the folder where you would like Jira Software to be installed.
+Where should Jira Software be installed?
+[/opt/atlassian/jira]
+Enter
+Default location for Jira Software data
+[/var/atlassian/application-data/jira]
+Enter
+Configure which ports Jira Software will use.
+Jira requires two TCP ports that are not being used by any other
+applications on this machine. The HTTP port is where you will access Jira
+through your browser. The Control port is used to startup and shutdown Jira.
+Use default ports (HTTP: 8080, Control: 8005) - Recommended [1, Enter], Set custom value for HTTP and Control ports [2]
+1
+Jira can be run in the background.
+You may choose to run Jira as a service, which means it will start
+automatically whenever the computer restarts.
+Install Jira as Service?
+Yes [y, Enter], No [n]
+y
+Details on where Jira Software will be installed and the settings that will be used.
+Installation Directory: /opt/atlassian/jira 
+Home Directory: /var/atlassian/application-data/jira 
+HTTP Port: 8080 
+RMI Port: 8005 
+Install as service: Yes 
+Install [i, Enter], Exit [e]
+i
+Extracting files ...                                                                          
+Please wait a few moments while Jira Software is configured.
+Installation of Jira Software 8.7.1 is complete
+Start Jira Software 8.7.1 now?
+Yes [y, Enter], No [n]
+y
+Please wait a few moments while Jira Software starts up.
+Launching Jira Software ...
+Installation of Jira Software 8.7.1 is complete
+Your installation of Jira Software 8.7.1 is now ready and can be accessed
+via your browser.
+Jira Software 8.7.1 can be accessed at http://localhost:8080
+Finishing installation ...

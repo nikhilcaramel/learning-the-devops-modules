@@ -1,0 +1,113 @@
+Please refer : https://www.toptechskills.com/ansible-tutorials-courses/ansible-file-module-tutorial-examples/
+Command module
+
+- name: using command module
+  hosts: all
+  become: yes
+  tasks:
+   - name: creating file
+     command: touch /tmp/cmd_file
+   - name: shell module          ----------------------------> shell module
+     shell: echo "Hello" >  /tmp/testfile.txt
+   - name: fetch module          ----------------------------> fetch module
+     fetch:
+      src: /tmp/cmd_file
+      dest: fetched              ----------------------------> will create fetched folder in master server
+     register: fetch_output
+   - debug: var=fetch_output
+   - name: file creation         ----------------------------> file module
+     file:
+      path: /tmp/file1
+      state: touch
+   - name: copy module           ----------------------------> copy module
+     copy:
+      src: slave                 ----------------------------> file in controller server
+      dest: /tmp/slave           ----------------------------> directory in slave server
+   
+
+uri reference : https://docs.ansible.com/ansible/latest/collections/ansible/builtin/uri_module.html
+   - name: check u can connect to page through uri ----------------------> uri module
+     uri:
+      url: https://github.com/HariReddy910/caramelIT
+
+tag reference : https://www.educba.com/ansible-tags/?source=leftnav
+   - name: creating file
+     command: touch /tmp/cmd_file
+     tags: creatermd
+execution: ansible-playbook command.yml --tags(to execute only this)||--skip-tags(to not execute this) "creatermd"
+handlers reference : https://www.educba.com/ansible-handlers/?source=leftnav
+                     https://www.bogotobogo.com/DevOps/Ansible/Ansible-Handlers.php
+   - name: fetch module
+     fetch:
+      src: /tmp/cmd_file
+      dest: fetched
+      notify: fetch
+      handlers:
+       name: fetch
+line-in-file : https://www.middlewareinventory.com/blog/ansible-lineinfile-examples/
+   - name: line-in module
+     lineinfile:
+      path: /tmp/testfile.txt
+      line: "hello"
+      state: present
+     check_mode: yes
+     register: linein_output
+git module :
+   - name: git pckg
+     apt:
+      name: git
+      state: present
+   - name: git repo
+     git:
+      repo: https://github.com/HariReddy910/caramelIT.git
+      dest: /var/www/html/
+archive reference : https://linuxhint.com/ansible_archive_unarchive/
+   - name: archive module
+     archive:
+      path: /home/ubuntu/test1dir/project/*
+      dest: /home/ubuntu/test1dir/project.zip
+error handling : https://blog.opstree.com/2019/11/19/error-handling-in-ansible/
+   - name: error handling
+     block:
+      - name: checking error
+        archive:
+         path: /home/ubuntu/test5dir/project/*
+         dest: /home/ubuntu/test5dir/project.zip
+     rescue:
+      - debug:
+         msg: "no test5"
+stat reference : https://docs.ansible.com/ansible/latest/collections/ansible/builtin/stat_module.html
+   - name: stat module
+     stat:
+      path: /home/ubuntu/test1dir
+     register: p
+   - debug:
+      msg: "directory exists"
+     when: p.stat.isdir
+loop reference : https://www.mydailytutorials.com/working-with-ansible-loop/#:~:text=Ansible%20loop%20provides%20a%20lot,written%20like%20the%20below%20example.&text=In%20the%20above%20task%2C%20instead,them%20into%20a%20single%20task.
+  - name: Ansible loop with index example
+    debug:
+      msg: "echo loop index at {{ item.0 }} and value at {{item.1}}"
+    with_indexed_items:
+      - "hello1"
+      - "hello2"
+      - "hello3"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+...
