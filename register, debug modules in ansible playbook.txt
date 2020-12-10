@@ -1,0 +1,27 @@
+---
+- name: installing pckgs
+  hosts: all
+  become: yes
+  tasks:
+   - name: installing apache2
+     apt:
+      name: apache2
+      state: present
+      update_cache: yes
+     tags: apache
+   - name: installing maven
+     apt:
+      name: maven
+      state: present
+      update_cache: yes
+     tags: mavn
+   - name: apache2 status
+     command: service apache2 status
+     register: apachestatus
+   - debug: var=apachestatus
+
+execution:
+ansible-playbook tags.yml
+
+register : to store a value
+debug : to print a value in register

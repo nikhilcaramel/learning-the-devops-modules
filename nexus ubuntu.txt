@@ -1,0 +1,35 @@
+Nexus installation on ubuntu 
+
+refer link for installation : https://stackoverflow.com/questions/57028412/how-to-install-nexus-on-ubuntu-18-04
+
+launch instance ubuntu -> select t2medium -> open 8081port
+sudo apt-get update
+install java8(enter javac)
+cd /opt
+sudo wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz(download latest one using link https://medium.com/@everton.araujo1985/install-sonatype-nexus-3-on-ubuntu-20-04-lts-562f8ba20b98 (latest one)
+sudo  tar -zxvf nexus-3.16.1-02-unix.tar.gz
+sudo  mv /opt/nexus-3.16.1-02 /opt/nexus
+sudo adduser nexus
+give password nexus
+press enter and press y
+sudo visudo
+under root paste ->nexus   ALL=(ALL)       NOPASSWD: ALL
+sudo chown -R nexus:nexus /opt/nexus
+sudo chown -R nexus:nexus /opt/sonatype-work
+sudo vim /opt/nexus/bin/nexus.rc
+run_as_user="nexus" (file shold have only this line)
+sudo ln -s /opt/nexus/bin/nexus /etc/init.d/nexus
+su - nexus
+/etc/init.d/nexus start 
+open browser ipaddress:8081
+username :admin
+password : copylink (get password using cat command)
+
+
+setup in jenkins
+manage jenkins->configure system->sonatype nexus->select 3.x server
+displayname : any name(unique)
+serverid : same as displayname(anything)
+server url : nexus url
+credentials : add -> jenkins -> give jenkins credentials username and password
+test connection

@@ -1,0 +1,44 @@
+Pipeline script for nexus
+
+refer link : https://www.youtube.com/watch?v=p_Wo3aqUJto
+
+pipeline {
+    agent any 
+    
+   
+
+    stages{
+        stage('clone repo') {
+            steps {
+                sh "rm -rf sample-login"
+            
+                sh "git clone https://github.com/nikhilcaramel/sample-login.git";
+            }
+                
+            
+        }
+        stage('mvn build') {
+            
+            steps { 
+                script {
+                def mvnHOME =  tool name: 'mvn3', type: 'maven'
+                
+                sh "${mvnHOME}/bin/mvn package"
+                }
+            }    
+        }
+        stage('tomcat war') {
+            steps {
+                sshagent(['0af00644-641b-43eb-875d-b569be26ace1']) {
+                sh "scp -o StrictHostKeyChecking=no target/*.war ubuntu@13.233.101.155:/home/ubuntu/apache-tomcat-9.0.40/webapps"
+                }
+            }
+        }
+        stage('nexus artifact') {
+            steps {
+                nexusArtifactUploader artifacts: [[artifactId: 'app', classifier: '', file: 'target/app.war', type: 'war']], credentialsId: 'nexusmanager', groupId: 'caramelit', nexusUrl: '15.207.98.106:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'sampleapppipe', version: '3.0'
+                
+            }
+        } 
+    }
+}

@@ -1,0 +1,30 @@
+---
+- name: installing pckgs
+  hosts: all
+  become: yes
+  tasks:
+   - name: installing apache2
+     apt:
+      name: apache2
+      state: present
+      update_cache: yes
+     tags: apache
+   - name: installing maven
+     apt:
+      name: maven
+      state: present
+      update_cache: yes
+     tags: mavn
+   - name: installing git
+     apt:
+      name: git
+      state: present
+      update_cache: yes
+     tags: gits
+...
+
+ansible-playbook tags.yml --tags apache (only apache will be installed)
+ansible-playbook tags.yml --skip-tags apache (all execpt apache will be installed)
+ansible-playbook tags.yml --tags [apache, gits](only apache and gits will be installed)
+
+
