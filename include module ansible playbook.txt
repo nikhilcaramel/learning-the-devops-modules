@@ -1,0 +1,12 @@
+---
+- name: include module
+  hosts: all
+  become: yes
+  tasks:
+   - name: file creation testing
+     file:
+      path: /home/ubuntu/include.txt
+      state: touch
+- name: include module using
+  include: stat.yml
+...

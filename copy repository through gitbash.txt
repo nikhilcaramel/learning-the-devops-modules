@@ -1,0 +1,11 @@
+ 319  git clone https://github.com/Yuga-23/caramel.git
+  320  cd caramel
+  321  ls
+  322  rm -rf .git
+  323  git init
+  324  git remote add origin https://github.com/nikhilcaramel/copypaste.git
+  325  git status
+  326  git add .
+  327  git commit -m "add all"
+  328  git push -u origin master
+  329  history

@@ -1,0 +1,18 @@
+---
+- name: error handler module
+  hosts: all
+  become: yes
+  tasks:
+   - name: concept
+     block:
+      - name: block
+        service:
+         name: apache2
+         state: restarted
+     rescue:
+      - debug:
+         msg: "the apache2 cannot be restarted"
+     always:
+      - debug:
+         msg: " i will be executed however"
+...

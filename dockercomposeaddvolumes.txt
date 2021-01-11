@@ -1,0 +1,18 @@
+version : '3.7'
+
+volumes:
+ volume1:
+  external: true
+services:
+ jenki:
+  image: jenkins/jenkins
+  ports:
+   - 7070:8080
+  volumes:
+   - volume1:/var/lib/docker/volumes/volume1/_data
+
+
+
+
+
+

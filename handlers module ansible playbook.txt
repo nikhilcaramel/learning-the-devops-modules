@@ -1,0 +1,25 @@
+---
+- name: installing pckgs
+  hosts: all
+  become: yes
+  tasks:
+   - name: installing apache2
+     apt:
+      name: apache2
+      state: present
+      update_cache: yes
+     tags: apache
+   - name: file creation
+     file:
+      path: /home/ubuntu/permissions
+      state: touch
+     notify:
+      apache2 handler
+     tags: file
+  handlers:
+   - name: apache2 handler
+     service:
+      name: apache2
+      state: restarted
+...
+

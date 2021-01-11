@@ -1,0 +1,84 @@
+Deploy PHP laravel project in Apache2:
+
+Link Ref : https://www.hostinger.in/tutorials/how-to-install-laravel-on-ubuntu-18-04-with-apache-and-php/
+
+1.sudo -i(to switch to root user)
+2.sudo systemctl status apache2
+3.sudo apt install apache2
+4.sudo systemctl status apache2
+5.open ip:80
+6.u will see apache2 homepage
+7.install php(sudo apt install php libapache2-mod-php php-mbstring php-xmlrpc php-soap php-gd php-xml php-cli php-zip php-bcmath php-tokenizer php-json php-pear)
+8.apt-get update
+9.sudo nano /var/www/html/test.php
+10.paste below code
+   <?php
+phpinfo();
+?>
+11.open ip/test.php
+12. u will see php info page
+13.sudo apt install mysql-server
+14.sudo mysql_secure_installation
+15.Remove anonymous users? [Y/n] n
+	Disallow root login remotely? [Y/n] n
+	Remove test database and access to it? [Y/n] n
+	Reload privilege tables now? [Y/n] n
+16.mysql -u root -p 
+17 give password (same as step14)
+18.create user 'user2'@'%' identified by 'Caramel@2020';
+19.grant all privileges on * . * to 'user2'@'%';
+20.flush privileges;
+21.nano /etc/mysql/mysql.cnf
+	[mysqld]
+	bind-address = 0.0.0.0
+	port = 3306
+22.cd /etc/init.d/mysql restart
+23.curl -sS https://getcomposer.org/installer | php
+24.sudo mv composer.phar /usr/local/bin/composer
+25.sudo chmod +x /usr/local/bin/composer
+26.cd var/www/html
+27.git clone githubprojectlink
+28.cd preojectname(example)
+29.sudo chgrp -R www-data /var/www/html/example/
+30.sudo chmod -R 775 /var/www/html/example/storage
+31.come out to rootuser
+32.mysql -u user2 -p
+33.give password (i,e. Caramel@2020)
+34.create database dbname;
+35.use dbname;
+36.source /var/www/html/example/.sql (for importing .sql files into database db2)
+37.systemctl restart mysql
+38.cd /etc/apache2/sites-available
+39.sudo nano 000-default.conf
+//in the place of thedomain.com our ipaddress has to be given
+	<VirtualHost *:80>
+   ServerName thedomain.com
+   ServerAdmin webmaster@thedomain.com
+   DocumentRoot /var/www/html/example/public
+
+   <Directory /var/www/html/example>
+       AllowOverride All
+   </Directory>
+   ErrorLog ${APACHE_LOG_DIR}/error.log
+   CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+40.sudo a2enmod rewrite
+41.sudo systemctl restart apache2
+42.cd /var/www/html/example
+43.nano .env
+44.change username: user2 database: db2 
+
+
+If u get error :
+45.if u get error select session
+46.cd /var/www/html/example
+47.composer update
+
+
+
+
+
+
+
+
+

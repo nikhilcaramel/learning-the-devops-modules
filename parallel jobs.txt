@@ -1,0 +1,46 @@
+pipeline{
+    agent none
+  
+        options {
+    buildDiscarder(logRotator(numToKeepStr: '3'))
+    }
+        
+   stages{
+       
+       stage("build name"){
+        agent{label"master"}   
+        steps{
+          buildName 'siva'  
+        }
+    }
+    
+  
+       stage("download"){
+           agent{label"master"}
+            steps{
+            git credentialsId: 'github-cred', url: 'https://github.com/paddo0404/gamenew.git'
+        }
+    }
+    stage("build"){
+        agent{label"master"}
+        steps{
+            sh 'mvn package'
+        }
+    }
+    
+    stage('parallele job on node'){
+            agent{label"linux-node"}
+            steps {
+                echo 'hello devops team'
+            }
+        }
+    
+        stage('Download'){
+            agent{label"linux-node"}
+            steps {
+                git credentialsId: 'github-cred', url: 'https://github.com/paddo0404/gamenew.git'
+                echo 'cloning github  finished on jenkins server'
+        }
+    }
+  }
+ }

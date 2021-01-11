@@ -1,0 +1,47 @@
+Automation deployment of php laravel on apache2
+
+
+pipeline{
+    agent any
+     options {
+    buildDiscarder(logRotator(numToKeepStr: '1'))
+  }
+             stages{  
+               stage('Checkout SCM'){ 
+                  steps{
+                checkout([$class: 'GitSCM', 
+				branches: [[name: '*/master']], 
+				doGenerateSubmoduleConfigurations: false, 
+				extensions: [], 
+				submoduleCfg: [], 
+				userRemoteConfigs: [[credentialsId: 'github_Cred', 
+				url: 'https://github.com/hbnreddy/laravel.git']]])
+                    }
+               }
+                  
+         /*  stage('build'){
+             steps{
+                sh '''composer install
+                      npm update 
+                      npm run production'''     
+                    }
+                 }
+             stage('quality'){
+                steps{
+                 sh '''
+                   sonar-scanner \
+					-Dsonar.projectKey=laravel1 \
+					-Dsonar.projectName=laravel1 \
+					-Dsonar.sources=. \
+					-Dsonar.host.url=http://103.160.144.44:9000 \
+					'''
+                     }    
+                 } */
+                 stage('DEPLOYMENT'){
+             steps{
+                 sh '''rsync -rtvpl /var/lib/jenkins/workspace/laravel-test1 root@3.140.80.66:/var/www/html'''
+             }
+            }
+	         
+			}
+}

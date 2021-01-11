@@ -1,0 +1,15 @@
+---
+- name: stat module
+  hosts: all
+  become: yes
+  tasks:
+   - name: check if file exists using stat
+     stat:
+      path: /home/ubuntu/statmodule
+     register: result
+   - name: create if not exists
+     file:
+      path: /home/ubuntu/statmodule
+      state: touch
+     when: result.stat.exists == false
+...

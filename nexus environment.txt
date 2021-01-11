@@ -1,0 +1,7 @@
+    environment {
+        NEXUS_VERSION = "nexus3"
+        NEXUS_PROTOCOL = "http"
+        NEXUS_URL = "3.222.157.192:8081"
+        NEXUS_REPOSITORY = "personal"
+        NEXUS_CREDENTIAL_ID = "shankar"
+    }

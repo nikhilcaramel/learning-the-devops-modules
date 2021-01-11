@@ -1,0 +1,99 @@
+pipeline{
+    
+    agent any
+    options {
+        
+    buildDiscarder(logRotator(numToKeepStr: '2'))
+  }
+    environment {
+        NEXUS_VERSION = "nexus3"
+        NEXUS_PROTOCOL = "http"
+        NEXUS_URL = "3.222.157.192:8081/repository/shankar_caramel/"
+        NEXUS_REPOSITORY = "shankar_caramel"
+        NEXUS_CREDENTIAL_ID = "nexus_cred"
+    } 
+    stages{
+        
+        stage('build name'){
+            
+            steps{
+                buildName 'nik'
+            }
+        } 
+        
+        stage('download'){
+            
+            steps{
+                git credentialsId: 'gitHUB_credentials', url: 'https://github.com/CaramelIT-Harindra/Caramel-Registration.git'
+            }
+        } 
+        
+        stage('build'){
+            
+            steps{
+                sh 'mvn package'
+            }
+        } 
+        
+        stage('archieve'){
+            
+            steps{ 
+              archiveArtifacts artifacts: '**/*.war', followSymlinks: false
+            }
+        } 
+         stage('Code quality checking'){
+           steps{
+        withSonarQubeEnv('sonarQube') {
+          sh label: '', script: 'mvn sonar:sonar'
+               }  
+           }
+        } 
+        stage('Publish to Nexus Repository Manager') {
+            steps {
+                script {
+                    pom = readMavenPom file: "pom.xml";
+                    filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
+                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
+                    artifactPath = filesByGlob[0].path;
+                    artifactExists = fileExists artifactPath;
+                    if(artifactExists) {
+                        echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
+                        nexusArtifactUploader(
+                            nexusVersion: NEXUS_VERSION,
+                            protocol: NEXUS_PROTOCOL,
+                            nexusUrl: NEXUS_URL,
+                            groupId: pom.groupId,
+                            version: pom.version,
+                            repository: NEXUS_REPOSITORY,
+                            credentialsId: NEXUS_CREDENTIAL_ID,
+                            artifacts: [
+                                [artifactId: pom.artifactId,
+                                classifier: '',
+                                file: artifactPath,
+                                type: pom.packaging],
+                                [artifactId: pom.artifactId,
+                                classifier: '',
+                                file: "pom.xml",
+                                type: "pom"]
+                            ]
+                        );
+                    } else {
+                        error "*** File: ${artifactPath}, could not be found";
+                    }
+                }
+            } 
+        } 
+        
+         stage('Approval') {
+            agent none
+            steps {
+                script {
+                    def deploymentDelay = input id: 'Deploy', message: 'Deploy to production?', submitter: 'harindra', parameters: [choice(choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'], description: 'Hours to delay deployment?', name: 'deploymentDelay')]
+                    sleep time: deploymentDelay.toInteger(), unit: 'MINUTES'
+                }
+            }
+        }
+      }
+     
+    }
+        
